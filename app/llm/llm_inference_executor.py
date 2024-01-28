@@ -1,5 +1,4 @@
 import os
-import sys
 import time
 from datetime import timedelta
 
@@ -11,7 +10,6 @@ from app.llm.llm_provider.llm_model_factory import get_llm_model
 from app.model.rag_response import RagResponse
 from app.retrieval.vector_db_provider.vector_db_model import get_vector_db
 
-
 llm_model = None
 
 
@@ -20,14 +18,6 @@ def init():
 
 
 init()
-
-
-def get_llm_model_local():
-    global llm_model
-    if llm_model is None:
-        llm_model = get_llm_model(config.model_name, config.local_models_path)
-
-    return llm_model
 
 
 def prepare_transcription_fragments(relevant_movie_chunks, max_score: float):
@@ -78,7 +68,7 @@ def ask_question(users_query, enable_vector_search, k=config.k, vector_db=config
                   "based on your knowledge.")
 
     llm_model_response = (
-        get_llm_model_local().get_model_response(system, users_query))
+        get_llm_model(config.model_name, config.local_models_path).get_model_response(system, users_query))
 
     llm_user_response = llm_model_response.llm_user_response
     llm_full_response = llm_model_response.llm_full_response
@@ -107,52 +97,3 @@ def process_question(users_query, enable_vector_search, k=config.k, vector_db=co
         persist_evaluation(response, k)
 
     return response
-
-
-def print_response(response: RagResponse):
-    if response.llm_user_response:
-        print(f"Chatbot: '{response.llm_user_response}'; generated in {response.response_time}\n")
-        if response.evaluation:
-            print(response.evaluation)
-    else:
-        print("Error! No 'Answer' present in chatbot's response: ")
-
-
-def main():
-    if len(sys.argv) > 1:
-        response = process_question(sys.argv[1], True)
-        print_response(response)
-    else:
-        print("Welcome to the chat. Type your query or one of the following commands:\n"
-              "- 'response' to see the entire response of the previous query,\n"
-              "- 'context' to see the context,\n"
-              "- 'enable' to enable vector db search,\n"
-              "- 'disable' to disable vector db search,\n"
-              "- 'exit' to leave.\n")
-        response = None
-        vector_db_search_enabled = True
-
-        while True:
-            user_query = input("You: ").strip()
-
-            if user_query.lower() == 'exit':
-                print("Chatbot: Goodbye!")
-                break
-            elif user_query.lower() == 'response':
-                print(response.llm_full_response, "\n")
-            elif user_query.lower() == 'context':
-                for chunk in response.relevant_movie_chunks:
-                    document, score = chunk
-                    print(f"- Content: '{document.page_content}' ({score})")
-                    print(f"- Metadata: '{document.metadata}'\n")
-            elif user_query.lower() == 'enable':
-                vector_db_search_enabled = True
-            elif user_query.lower() == 'disable':
-                vector_db_search_enabled = False
-            else:
-                response = process_question(user_query, vector_db_search_enabled)
-                print_response(response)
-
-
-if __name__ == "__main__":
-    main()
