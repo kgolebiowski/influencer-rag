@@ -2,10 +2,10 @@ import sys
 import time
 from datetime import timedelta
 
-from app.vector_db import chroma_provider
-
+from app.retrieval.vector_db_provider import chroma_provider
 
 def query_chroma(chroma, prompt):
+
     print(f"Question: '{prompt}'\n")
 
     start_time = time.time()

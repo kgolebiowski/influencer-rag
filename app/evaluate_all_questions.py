@@ -3,7 +3,7 @@ import os
 
 from app import config
 
-from app._3_run_llm_llama_cpp import ask_question
+from app.llm.llm_inference_executor import ask_question
 from app.common.file_utils import createFolderIfNotExists
 from app.evaluations.evaluations import persist_evaluation
 from app.evaluations.evaluations_config import evaluations_config

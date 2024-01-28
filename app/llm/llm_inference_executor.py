@@ -7,9 +7,9 @@ from app import config
 from app.evaluations import evaluations
 from app.evaluations.evaluations import persist_evaluation
 from app.evaluations.evaluations_config import evaluations_config
-from app.llm_model.llm_model_factory import get_llm_model
+from app.llm.llm_provider.llm_model_factory import get_llm_model
 from app.model.rag_response import RagResponse
-from app.vector_db.vector_db_model import get_vector_db
+from app.retrieval.vector_db_provider.vector_db_model import get_vector_db
 
 
 llm_model = None

@@ -4,7 +4,7 @@ import torch
 import transformers
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-from app.llm_model.llm_model import LlmModel
+from app.llm.llm_provider.llm_model import LlmModel
 from app.model.llm_model_response import LlmModelResponse
 
 

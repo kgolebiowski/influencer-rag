@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 from app.model.channel import Channel
-from app.vector_db.vector_db_model import VectorDbType
+from app.retrieval.vector_db_provider.vector_db_model import VectorDbType
 
 
 @dataclass

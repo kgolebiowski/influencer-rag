@@ -8,8 +8,8 @@ from datetime import timedelta
 from app import config
 from app.retrieval.punctuator import punctuate
 from app.retrieval.tiler import get_sentences, create_paragraphs
-from app.utils.console_utils import bold
-from app.vector_db.vector_db_model import get_vector_db
+from app.common.console_utils import bold
+from app.retrieval.vector_db_provider.vector_db_model import get_vector_db
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)

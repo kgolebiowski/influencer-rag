@@ -1,7 +1,7 @@
 import streamlit as st
-from _3_run_llm_llama_cpp import process_question
+from llm.llm_inference_executor import process_question
 from app import config
-from app.vector_db.vector_db_model import VectorDbType
+from app.retrieval.vector_db_provider.vector_db_model import VectorDbType
 
 # Streamlit Page Configuration
 st.set_page_config(

@@ -1,6 +1,6 @@
 from llama_cpp import Llama
 
-from app.llm_model.llm_model import LlmModel
+from app.llm.llm_provider.llm_model import LlmModel
 from app.model.llm_model_response import LlmModelResponse
 
 
